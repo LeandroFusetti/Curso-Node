@@ -9,7 +9,7 @@ const argv= require("yargs")
                     alias: 'listar',
                     type:'boolean',
                     default:false,
-                    describe:'Imprime en consola lo que esta en el archivo'
+                    describe:'Imprime en consola lo del archivo'
                 })
                 .option('h',{
                     alias: 'hasta',
