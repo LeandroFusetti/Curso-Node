@@ -1,10 +1,5 @@
 [
  {
-  "id": "53d8c3d3-6e33-4b03-b9a3-3d714ed26d94",
-  "desc": "estudiar",
-  "completadoEn": "dfas"
- },
- {
   "id": "caeaa854-ea16-4e02-838e-96da44c2ab95",
   "desc": "comer",
   "completadoEn": null
@@ -17,16 +12,16 @@
  {
   "id": "63995b97-ea8a-463f-b00b-200ef2bf2de8",
   "desc": "gim",
-  "completadoEn": null
+  "completadoEn": "2025-01-14T16:36:03.668Z"
  },
  {
   "id": "42a67358-b65e-4c5c-8773-14562e8212d5",
   "desc": "futbol",
-  "completadoEn": null
+  "completadoEn": "2025-01-14T16:36:03.669Z"
  },
  {
-  "id": "9e3a45db-3287-4304-a73d-7585f1da685f",
-  "desc": "dormir",
+  "id": "d3e96ee1-b148-4fc3-994b-e4fe3fd69fba",
+  "desc": "Estudiar",
   "completadoEn": null
  }
 ]
