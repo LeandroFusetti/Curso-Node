@@ -1,4 +1,6 @@
+require('dotenv').config()
 const axios = require('axios')
+
 class Busquedas {
 
     historial = []
@@ -30,7 +32,38 @@ class Busquedas {
         }
         
         
-        return []
+        
+    }
+    get paramsOpenWeather(){
+        return {
+            'appid':process.env.OPENWEATHER_KEY,
+            'lang':'es',
+            'units':'metric'
+            
+        }
+    }
+
+    async climaLugar (lat,lon){
+        
+        try {
+            const intance =axios.create({
+                baseURL:`https://api.openweathermap.org/data/2.5/weather?`,
+                params: {...this.paramsOpenWeather,lat,lon}
+
+            })
+            const resp = await intance.get()
+            //console.log(resp.data);
+            
+            return {
+                desc:resp.data.weather[0].description,
+                min:resp.data.main.temp_min,
+                max:resp.data.main.temp_max,
+                temp:resp.data.main.temp
+            }
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
 }
 
