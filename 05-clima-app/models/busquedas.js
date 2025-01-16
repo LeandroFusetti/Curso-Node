@@ -1,12 +1,14 @@
+const fs = require('fs')
 require('dotenv').config()
 const axios = require('axios')
 
 class Busquedas {
 
     historial = []
-
+    dbPath= './db/database.json'
     constructor (){
-
+        this.leerDb()
+        
     }
     async ciudad (lugar= ''){
 
@@ -65,6 +67,33 @@ class Busquedas {
             
         }
     }
+    agregarHistorial(lugar=''){
+        if(this.historial.includes(lugar)){
+            return;
+        }
+        this.historial = this.historial.splice(0,5)
+        this.historial.unshift(lugar)
+        this.guardarDb()
+    }
+
+    guardarDb(){
+        const payload ={
+            historial: this.historial
+        }
+        fs.writeFileSync(this.dbPath,JSON.stringify(payload))
+    }
+    leerDb(){
+        if(!fs.existsSync(this.dbPath)){
+            return
+        }
+        const info = fs.readFileSync(this.dbPath,{encoding:'utf-8'})
+        const data= JSON.parse(info)
+        this.historial = data.historial
+        
+        
+    }
 }
+
+
 
 module.exports= Busquedas

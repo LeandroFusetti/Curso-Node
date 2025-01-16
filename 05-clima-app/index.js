@@ -1,6 +1,6 @@
 const { leerInput, inquirerMenu ,pausa, listarLugares} = require("./helpers/inquirer");
 const Busquedas = require("./models/busquedas");
-const axios = require('axios')
+
 
 
 const main = async ()=>{
@@ -16,22 +16,26 @@ const main = async ()=>{
                 const lugares = await busquedas.ciudad(lugar)
                 //seleccionar el lugar
                 const idSeleccionado = await listarLugares(lugares)
-                //console.log({idSeleccionado});
-                const lugarSeleccionado = lugares.find(lugar=>{
-                   return lugar.id == idSeleccionado
-                })
-                console.log({lugarSeleccionado});
+                if(idSeleccionado=='0')continue
+                
+                const lugarSeleccionado = lugares.find(lugar=>lugar.id == idSeleccionado  )
+                
+                //guardar en DB
+                busquedas.agregarHistorial(lugarSeleccionado.nombre)
+                  
+              
+                //console.log({lugarSeleccionado});
                 const climaLugar =await busquedas.climaLugar(lugarSeleccionado.lat,lugarSeleccionado.lng)
 
                 console.log('\nInformacion de la ciudad\n'.green);
-                console.log('Ciudad',lugarSeleccionado.nombre);
-                console.log('Lat',lugarSeleccionado.lat);
-                console.log('Lng',lugarSeleccionado.lng);
-                console.log('Descripcion:',climaLugar.desc);
+                console.log('Ciudad'.green,lugarSeleccionado.nombre.yellow);
+                console.log('Lat'.green,lugarSeleccionado.lat.yellow);
+                console.log('Lng'.green,lugarSeleccionado.lng.yellow);
+                console.log('Descripcion:'.green,climaLugar.desc.yellow);
 
-                console.log('Temperatura:',climaLugar.temp);
-                console.log('Mínima:',climaLugar.max);
-                console.log('Máxima:',climaLugar.min);
+                console.log('Temperatura:'.green,climaLugar.temp);
+                console.log('Mínima:'.green,climaLugar.max);
+                console.log('Máxima:'.green,climaLugar.min);
 
                 
                 
@@ -40,6 +44,12 @@ const main = async ()=>{
                 
                 
             break
+            case 2:
+                busquedas.historial.forEach((lugar,i)=>{
+                    const idx =`${i+1}.`.green
+                    console.log(`${idx}${lugar}`);
+                    
+                })
         }
         if(opt !=0)await pausa()
         
