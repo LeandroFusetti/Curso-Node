@@ -34,8 +34,8 @@ const main = async ()=>{
                 console.log('Descripcion:'.green,climaLugar.desc.yellow);
 
                 console.log('Temperatura:'.green,climaLugar.temp);
-                console.log('Mínima:'.green,climaLugar.max);
-                console.log('Máxima:'.green,climaLugar.min);
+                console.log('Mínima:'.green,climaLugar.min);
+                console.log('Máxima:'.green,climaLugar.max);
 
                 
                 
