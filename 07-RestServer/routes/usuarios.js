@@ -42,7 +42,7 @@ router.patch('/',usuariosPatch )
 
 router.delete('/:id',[
     //esto es secuencial
-    esAdminRole,
+    //esAdminRole,
     validarJWT,
     tieneRole('ADMIN_ROLE','VENTAS_ROLE'),
     check('id','No es un ID válido').isMongoId(),

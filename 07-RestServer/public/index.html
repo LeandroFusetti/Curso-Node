@@ -6,10 +6,11 @@
     <title>Google Sign-in</title>
 </head>
 <body>
+    
     <h1>Google Sign-in</h1>
     <hr>
     <div id="g_id_onload"
-        data-client_id="65362326112-276noe92demsp3o98nhnit4psnoaqe6e.apps.googleusercontent.com"
+        data-client_id="590409727699-n9o6to3cmc3i8dpvgcn16o6o5ldpu3t2.apps.googleusercontent.com"
         
         data-auto_prompt="false"
         data-callback="handleCredentialResponse">
@@ -22,11 +23,23 @@
         data-shape="rectangular"
         data-logo_alignment="left">
     </div>
+    <button id="google_signout">Signout</button>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
-       function handleCredentialResponse(response) {
+    const button= document.getElementById('google_signout')
+    button.onclick=()=>{
+        google.accounts.id.disableAutoSelect()
+        //
+        google.accounts.id.revoke(localStorage.getItem('email'),done=>{
+            localStorage.clear()
+            location.reload()
+        })
+    }
 
-        console.log("Google response:", response);
+       function handleCredentialResponse(response) {
+        console.log(response.credential);
+        
+        //console.log("Google response:", response);
     const body = { id_token: response.credential };
     console.log("Sending to backend:", body);
         fetch('http://localhost:8080/api/auth/google', {
@@ -36,7 +49,7 @@
             },
             body: JSON.stringify(body)
         })
-        .then( r=> r.json() )
+        .then( resp=> resp.json() )
         .then( resp =>{
             console.log(resp )
             localStorage.setItem('email', resp.usuario.correo )
@@ -44,15 +57,15 @@
         .catch( console.warn )
     }
       
-        function decodeJwtResponse(token) {
-          let base64Url = token.split('.')[1];
-          let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-          let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-              return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-          }).join(''));
+        // function decodeJwtResponse(token) {
+        //   let base64Url = token.split('.')[1];
+        //   let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        //   let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        //       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        //   }).join(''));
       
-          return JSON.parse(jsonPayload);
-        }
+        //   return JSON.parse(jsonPayload);
+        // }
       </script>
 </body>
 </html>

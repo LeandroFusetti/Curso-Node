@@ -7,7 +7,6 @@ const { googleVerify } = require('../helpers/google-verify')
 const login = async(req,res =response)=>{
     const {correo, password}=req.body
 
-
     try {
         //si el mail existe
         const usuario = await Usuario.findOne({correo})
@@ -45,8 +44,8 @@ const login = async(req,res =response)=>{
 }
 
 
-const googleSignIn = async(req,res=response)=>{
-    const {id_token}=req.body
+const googleSignIn = async (req, res = response) => {
+    const { id_token } = req.body;
 
     
     try {
@@ -59,11 +58,14 @@ const googleSignIn = async(req,res=response)=>{
                 nombre,
                 correo,
                 password:':P',
-                img,
-                google:true
+                google:true,
+                rol:'ADMIN_ROLE'
             }
             usuario= new Usuario(data)
-            await usuario.save()
+           
+                
+                await usuario.save()
+            
         }
         //Si el usuario en db
         if(!usuario.estado){
@@ -80,15 +82,14 @@ const googleSignIn = async(req,res=response)=>{
             token
         })
     } catch (error) {
+        console.log(error);       
         res.status(400).json({
-          
             msg:'El Token no se puedo verificar'
         })
     }
-    
-
-
 }
+
+
 
 module.exports = {
     login,
